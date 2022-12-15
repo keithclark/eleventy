@@ -390,7 +390,13 @@ class EleventyFiles {
 
     // Note 2.0.0-canary.19 removed a `filter` option for custom template syntax here that was unpublished and unused.
 
+    // Add any user-configured virtual templates to the collection
+    if (this.config.virtualTemplates) {
+      paths.push(...Object.keys(this.config.virtualTemplates));
+    }
+
     this.pathCache = paths;
+
     return paths;
   }
 

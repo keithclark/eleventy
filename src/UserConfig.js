@@ -100,6 +100,7 @@ class UserConfig {
     this.libraryAmendments = {};
     this.serverPassthroughCopyBehavior = "passthrough";
     this.urlTransforms = [];
+    this.virtualTemplates = {};
   }
 
   versionCheck(expected) {
@@ -887,6 +888,10 @@ class UserConfig {
     this.urlTransforms.push(callback);
   }
 
+  addVirtualTemplate(path, content) {
+    this.virtualTemplates[path] = content;
+  }
+
   getMergingConfigObject() {
     return {
       templateFormats: this.templateFormats,
@@ -944,6 +949,7 @@ class UserConfig {
       libraryAmendments: this.libraryAmendments,
       serverPassthroughCopyBehavior: this.serverPassthroughCopyBehavior,
       urlTransforms: this.urlTransforms,
+      virtualTemplates: this.virtualTemplates,
     };
   }
 }

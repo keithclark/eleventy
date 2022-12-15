@@ -83,6 +83,10 @@ class Template extends TemplateContent {
     this.behavior.setOutputFormat(this.outputFormat);
 
     this.serverlessUrls = null;
+
+    if (this.config.virtualTemplates[this.inputPath]) {
+      this.inputContent = this.config.virtualTemplates[this.inputPath];
+    }
   }
 
   get logger() {
@@ -928,6 +932,12 @@ class Template extends TemplateContent {
   }
 
   async _getDateInstance(key = "birthtimeMs") {
+    // If this path points at a virtual template return the current date as we can't
+    // retreive one from the filesystem.
+    if (Object.keys(this.config.virtualTemplates).includes(this.inputPath)) {
+      return new Date();
+    }
+
     let stat = await this.getInputFileStat();
 
     // Issue 1823: https://github.com/11ty/eleventy/issues/1823
